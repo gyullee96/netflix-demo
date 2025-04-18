@@ -1,0 +1,24 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background-color: black
+}
+
+.navbar {
+  background-color: rgb(18, 18, 18);
+}
+
+
+.netflixlogo {
+  max-width: 150px;
+  width: 100%;
+  padding-right: 6%;
+}
+
+.notfoundpage {
+  font-size: 40px;
+  text-align: center;
+  justify-content: center;
+}
