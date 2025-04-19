@@ -2,7 +2,7 @@ import React from 'react'
 
 const MoviePage = () => {
     return (
-        <div>MoviePage</div>
+        <div className='moviepagefont'>MoviePage</div>
     )
 }
 

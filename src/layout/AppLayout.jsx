@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function AppLayout() {
     return (
@@ -29,8 +30,8 @@ function AppLayout() {
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Nav className="justify-content-start flex-grow-1 pe-3">
-                                <Nav.Link href="/" style={{ color: 'white' }}>Home</Nav.Link>
-                                <Nav.Link href="/movies" style={{ color: 'white' }}>Movies</Nav.Link>
+                                <Nav.Link as={Link} to='/' style={{ color: 'white' }}>Home</Nav.Link>
+                                <Nav.Link as={Link} to='/movies' style={{ color: 'white' }}>Movies</Nav.Link>
                             </Nav>
                             <Form className="d-flex" >
                                 <Form.Control
