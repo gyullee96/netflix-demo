@@ -3,7 +3,8 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  background-color: black
+  background-color: black;
+  color: white !important;
 }
 
 .navbar {

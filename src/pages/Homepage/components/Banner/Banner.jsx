@@ -1,28 +1,54 @@
 import React from 'react'
 import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies'
+import { useTopRatedMoviesQuery } from '../../../../hooks/useTopRatedMovies';
+import { useUpcomingMoviesQuery } from '../../../../hooks/useUpcomingMovies';
 import Alert from 'react-bootstrap/Alert';
 import "./Banner.style.css"
 
 const Banner = () => {
 
-    const { data, isLoading, isError, error } = usePopularMoviesQuery()
-    console.log('ddd', data)
-    if (isLoading) {
-        <h1>Loading...</h1>
+    const {
+        data: popularData,
+        isLoading: isPopularLoading,
+        isError: isPopularError,
+        error: popularError
+    } = usePopularMoviesQuery();
+
+    const {
+        data: topratedData,
+        isLoading: isTopRatedLoading,
+        isError: isTopRatedError,
+        error: topratedError
+    } = useTopRatedMoviesQuery()
+
+    const {
+        data: upcomingData,
+        isLoading: isUpcomingLoading,
+        isError: isUpcomingError,
+        error: upcomingError
+    } = useUpcomingMoviesQuery()
+
+    if (isPopularLoading || isTopRatedLoading || isUpcomingLoading) {
+        return <h1>Loading...</h1>;
     }
-    if (isError) {
-        <Alert variant={'danger'}>{error.message}</Alert>
-    }
+
+    if (isPopularError) return <Alert variant="danger">{popularError.message}</Alert>;
+    if (isTopRatedError) return <Alert variant="danger">{topratedError.message}</Alert>;
+    if (isUpcomingError) return <Alert variant="danger">{upcomingError.message}</Alert>;
+
     return (
         <div style={{
             backgroundImage:
-                "url(" + `https://media.themoviedb.org/t/p/w1066_and_h600_bestv2${data?.results[0].poster_path}` + ")"
+                "url(" + `https://media.themoviedb.org/t/p/w1066_and_h600_bestv2${popularData?.results[0].poster_path}` + ")"
         }}
             className='banner'
         >
             <div className='text-white banner-text-area'>
-                <h1>{data?.results[0].title}</h1>
-                <p>{data?.results[0].overview}</p>
+                <h1>{popularData?.results[0].title}</h1>
+                <p>{popularData?.results[0].overview}</p>
+                <hr />
+                <h5>🎬 Top Rated: {topratedData?.results[0]?.title}</h5>
+                <h5>📅 Upcoming: {upcomingData?.results[0]?.title}</h5>
             </div>
         </div>
     )
