@@ -46,9 +46,6 @@ const Banner = () => {
             <div className='text-white banner-text-area'>
                 <h1>{popularData?.results[0].title}</h1>
                 <p>{popularData?.results[0].overview}</p>
-                <hr />
-                <h5>🎬 Top Rated: {topratedData?.results[0]?.title}</h5>
-                <h5>📅 Upcoming: {upcomingData?.results[0]?.title}</h5>
             </div>
         </div>
     )
