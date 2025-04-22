@@ -6,12 +6,23 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Outlet } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
-function AppLayout() {
+
+const AppLayout = () => {
+
+    const [keyword, setKeyword] = useState('');
+    const navigate = useNavigate();
+
+    const searchByKeyword = (event) => {
+        event.preventDefault();
+        // url을 바꿔주기
+        navigate(`/movies?q=${keyword}`);
+        setKeyword('');
+    }
+
     return (
-
         <div>
             <Navbar className='Navbar'>
                 <Container fluid>
@@ -33,14 +44,16 @@ function AppLayout() {
                                 <Nav.Link as={Link} to='/' style={{ color: 'white' }}>Home</Nav.Link>
                                 <Nav.Link as={Link} to='/movies' style={{ color: 'white' }}>Movies</Nav.Link>
                             </Nav>
-                            <Form className="d-flex" >
+                            <Form className="d-flex" onSubmit={searchByKeyword}>
                                 <Form.Control
                                     type="search"
                                     placeholder="Search"
                                     className="me-2"
                                     aria-label="Search"
+                                    value={keyword}
+                                    onChange={(event) => setKeyword(event.target.value)}
                                 />
-                                <Button variant="outline-danger">Search</Button>
+                                <Button type='submit' variant="outline-danger">Search</Button>
                             </Form>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
