@@ -67,7 +67,7 @@ const MoviePage = () => {
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={3}
                         marginPagesDisplayed={2}
-                        pageCount={data?.total_pages} // 전체 페이지가 몇 개인지
+                        pageCount={(data?.total_pages) < 500 ? data?.total_pages : 500} // 전체 페이지가 몇 개인지
                         previousLabel="< previous"
                         pageClassName="page-item"
                         pageLinkClassName="page-link"
