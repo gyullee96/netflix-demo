@@ -2,10 +2,18 @@ import React from 'react'
 import Badge from 'react-bootstrap/Badge';
 import './MovieCard.style.css'
 import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
-
+import { useNavigate } from 'react-router-dom';
+import { useMovieDetailQuery } from '../../hooks/useMovieDetail';
 
 const MovieCard = ({ movie }) => {
 
+    const { data: detailData } = useMovieDetailQuery(movie.id)
+    // console.log('ddd', detailData)
+
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/movie/${movie.id}'); //무비디테일페이지로 이동
+    }
 
     const { data: genreData } = useMovieGenreQuery()
 
@@ -23,6 +31,7 @@ const MovieCard = ({ movie }) => {
         <div
             style={{ backgroundImage: "url(" + `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${movie.poster_path}` + ")", }}
             className='movie-card'
+            onClick={handleClick}
         >
             <div className='overlay'>
                 <h1>{movie.title}</h1>
