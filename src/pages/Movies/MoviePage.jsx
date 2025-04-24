@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { useSearchMovieQuery } from '../../hooks/useSearchMovies'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
 import MovieCard from '../../common/MovieCard/MovieCard'
 import ReactPaginate from 'react-paginate'
@@ -10,7 +10,12 @@ import ReactPaginate from 'react-paginate'
 // keyword를 입력해서 온 경우 => keyword와 관련된 영화들을 보여주기
 
 
-const MoviePage = () => {
+const MoviePage = ({ id }) => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/movies/${id}`); //무비디테일페이지로 이동
+    }
+
     const [query, setQuery] = useSearchParams()
     const [page, setPage] = useState(1);
     const keyword = query.get("q");
@@ -57,7 +62,7 @@ const MoviePage = () => {
                         )}
 
                         {data?.results?.map((movie, index) => (
-                            <Col key={index} lg={4} xs={12}>
+                            <Col onClick={handleClick} key={index} lg={4} xs={12}>
                                 <MovieCard movie={movie} />
                             </Col>
                         ))}
