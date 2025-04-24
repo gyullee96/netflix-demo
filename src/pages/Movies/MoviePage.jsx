@@ -21,7 +21,7 @@ const MoviePage = () => {
     // useEffect로 keyword가 바뀔 때 pagination을 1로 리셋
 
     const { data, isLoading, isError, error } = useSearchMovieQuery({ keyword, page })
-    console.log('ddd', data);
+    // console.log('ddd', data);
 
     const handlePageClick = ({ selected }) => (
         setPage(selected + 1)

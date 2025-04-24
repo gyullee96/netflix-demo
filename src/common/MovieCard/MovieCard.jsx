@@ -5,14 +5,11 @@ import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
 import { useNavigate } from 'react-router-dom';
 import { useMovieDetailQuery } from '../../hooks/useMovieDetail';
 
-const MovieCard = ({ movie }) => {
-
-    const { data: detailData } = useMovieDetailQuery(movie.id)
-    // console.log('ddd', detailData)
+const MovieCard = ({ movie, id }) => {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate('/movie/${movie.id}'); //무비디테일페이지로 이동
+        navigate(`/movies/${id}`); //무비디테일페이지로 이동
     }
 
     const { data: genreData } = useMovieGenreQuery()
