@@ -6,6 +6,10 @@
     transition: 0.5s;
 }
 
+.movie-card-title {
+    font-size: clamp(1.3rem, 2.5vw, 1.5rem);
+}
+
 .overlay {
     width: 100%;
     height: 100%;

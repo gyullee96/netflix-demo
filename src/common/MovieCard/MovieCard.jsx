@@ -31,7 +31,7 @@ const MovieCard = ({ movie, id }) => {
             onClick={handleClick}
         >
             <div className='overlay'>
-                <h1>{movie.title}</h1>
+                <h1 className='movie-card-title'>{movie.title}</h1>
                 {showGenre(movie.genre_ids).map((genre, index) => (<Badge bg="danger" key={index} className='me-1'>{genre}</Badge>))}
                 <div>
                     <div>{movie.vote_average}</div>

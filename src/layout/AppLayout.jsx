@@ -44,7 +44,7 @@ const AppLayout = () => {
                                 <Nav.Link as={Link} to='/' style={{ color: 'white' }}>Home</Nav.Link>
                                 <Nav.Link as={Link} to='/movies' style={{ color: 'white' }}>Movies</Nav.Link>
                             </Nav>
-                            <Form className="d-flex" onSubmit={searchByKeyword}>
+                            <Form className="search-form d-flex" onSubmit={searchByKeyword}>
                                 <Form.Control
                                     type="search"
                                     placeholder="Search"
