@@ -6,14 +6,23 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 
 
 const AppLayout = () => {
 
     const [keyword, setKeyword] = useState('');
+    const [show, setShow] = useState(false);
+
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // location이 바뀌면 자동으로 sidebar닫기
+    useEffect(() => {
+        setShow(false);
+    }, [location]);
 
     const searchByKeyword = (event) => {
         event.preventDefault();
@@ -24,19 +33,30 @@ const AppLayout = () => {
 
     return (
         <div>
-            <Navbar className='Navbar'>
+            <Navbar className='Navbar' expand="lg">
                 <Container fluid>
                     <img className="netflixlogo" src="https://wallpapers.com/images/featured/netflix-logo-png-fqwt81hprrz7xsfg.jpg" alt="" />
                     <Navbar.Brand href="#"></Navbar.Brand>
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />
+
+                    {/* 토글 버튼 (햄버거 버튼) */}
+                    <Navbar.Toggle
+                        aria-controls={`offcanvasNavbar-expand`}
+                        className="custom-toggle"
+                        onClick={() => setShow(prev => !prev)} />
+
+                    {/* 오프캔버스 메뉴 */}
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand`}
                         aria-labelledby={`offcanvasNavbarLabel-expand`}
                         placement="end"
+                        responsive="lg"
+                        style={{ backgroundColor: 'black' }}
+                        show={show}
+                        onHide={() => setShow(false)}
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
-                                Offcanvas
+                                Netflix
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>

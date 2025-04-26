@@ -8,14 +8,11 @@ const TopRatedMovieSlide = () => {
 
     const { data, isLoading, isError, error } = useTopRatedMoviesQuery()
 
-    if (isLoading) {
-        return <h1>Loading...</h1>
-    }
     if (isError) {
         return <Alert variant='danger'>{error.message}</Alert>
     }
     return (
-        <div>
+        <div style={{ padding: '2%' }}>
             <MovieSlider title='TopRated Movies' movies={data.results} responsive={responsive} />
         </div>
     )

@@ -74,9 +74,9 @@ const MoviePage = ({ id }) => {
     }
 
     return (
-        <Container>
+        <Container className='pt-3'>
             <Row>
-                <Col lg={4} xs={12}>
+                <Col lg={4} xs={12} className='d-flex flex-row pb-5'>
                     <DropdownButton id="dropdown-item-button" title="Sort">
                         <Dropdown.ItemText>Sort Results By</Dropdown.ItemText>
                         <Dropdown.Item as="button" onClick={() => setSortOrder('desc')}>
@@ -105,14 +105,9 @@ const MoviePage = ({ id }) => {
                 <Col lg={8} xs={12}>
                     <Row>
                         {data?.results?.length === 0 && keyword && (
-                            <h1>검색결과가 없습니다</h1>
+                            <h1 className="pt-3 pb-3">요청하신 검색 결과가 없습니다</h1>
                         )}
 
-                        {/* {data?.results?.map((movie, index) => (
-                            <Col onClick={handleClick} key={index} lg={4} xs={12}>
-                                <MovieCard movie={movie} />
-                            </Col>
-                        ))} */}
                         {[...data?.results]
                             .filter((movie) =>
                                 selectedGenre ? movie.genre_ids.includes(selectedGenre) : true

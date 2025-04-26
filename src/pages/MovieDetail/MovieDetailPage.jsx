@@ -7,6 +7,7 @@ import { useMovieVideoQuery } from '../../hooks/useMovieVideos';
 import { useParams } from 'react-router-dom';
 import { Alert, Container, Row, Col, Badge, Modal, Button } from 'react-bootstrap';
 import YouTube from 'react-youtube';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewItem = ({ review }) => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -34,6 +35,7 @@ const ReviewItem = ({ review }) => {
 
 const MovieDetailPage = () => {
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
     const { id } = useParams();
     const videoOpts = {
         width: '100%',
@@ -75,9 +77,6 @@ const MovieDetailPage = () => {
     console.log("recommenddata", recommendData)
     console.log("videodata", videoData)
 
-    if (isDetailLoading || isReviewLoading || isRecommendLoading || isVideoLoading) {
-        return <h1>Loading...</h1>
-    }
     if (isDetailError) {
         return <Alert variant='danger'>{detailError.message}</Alert>
     }
@@ -91,50 +90,30 @@ const MovieDetailPage = () => {
         return <Alert variant='danger'>{videoError.message}</Alert>
     }
     return (
-        <Container>
+        <Container className='pt-3'>
             <Row>
-                <Col lg={6} xs={6}>
-                    <img src={`https://www.themoviedb.org/t/p/w1280${detailData.poster_path}`} alt="" className="img-fluid" />
+                <Col lg={6} xs={12}>
+                    <img src={`https://www.themoviedb.org/t/p/w1280${detailData?.poster_path}`} alt="" className="img-fluid" />
                 </Col>
-                <Col lg={6} xs={6}>
-                    {detailData?.genres?.map((genre) => (<Badge bg="danger" className='me-1'>{genre.name}</Badge>))}
-                    <h1 className='movie-title'>{detailData.title}</h1>
-                    <h2 className='movie-popularity'>{detailData.popularity}</h2>
-                    <h3 className='movie-overview'>{detailData.overview}</h3>
-                    <h2 className='movie-budget'>{detailData.budget.toLocaleString()}</h2>
-                    <h2>{detailData.release_date}</h2>
-                </Col>
-            </Row>
-            <Row className='moviereview'>
-                <Col lg={12} s={12}>
-                    <h2>Movie Review</h2>
 
-                    {reviewData?.results?.map((review) => (
-                        <ReviewItem key={review.id} review={review} />
-                    ))}
+                <Col lg={6} xs={12}>
+                    {detailData?.genres?.map((genre) => (<Badge bg="danger" className='me-1'>{genre.name}</Badge>))}
+                    <h1 className='movie-title'>{detailData?.title}</h1>
+                    <h2 className='movie-popularity'>인기도: {detailData?.popularity}</h2>
+                    <h3 className='movie-overview'>{detailData?.overview}</h3>
+                    <h2 className='movie-budget'>예산: {detailData?.budget.toLocaleString()}</h2>
+                    <h2>개봉일: {detailData?.release_date}</h2>
                 </Col>
             </Row>
-            <Row className='recommendmovie'>
-                <h1>추천 영화</h1>
-                {recommendData?.results?.map((imgs, index) => (
-                    <Col lg={6} sm={12} key={index} className="mb-3">
-                        <img
-                            src={`https://www.themoviedb.org/t/p/w1280${imgs.backdrop_path}`}
-                            alt=""
-                            className="img-fluid"
-                        />
-                    </Col>
-                ))}
-            </Row>
-            <Row>
-                <Button variant="primary" onClick={() => setShow(true)}>
-                    예고편 보기
+            <Row className='pt-5 pb-5'>
+                <Button variant="primary" onClick={() => setShow(true)} className='fs-5'>
+                    예고편 보기 (Click!)
                 </Button>
 
                 <Modal show={show} onHide={() => setShow(false)} centered size='xl' className='modal'>
                     <Modal.Body>
                         <YouTube
-                            videoId={videoData?.results?.[0]?.key}
+                            videoId={videoData?.results?.find(video => video.type === 'Trailer')?.key}
                             opts={videoOpts} />
                     </Modal.Body>
                     <Modal.Footer>
@@ -143,6 +122,41 @@ const MovieDetailPage = () => {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+            </Row>
+            <Row className='moviereview'>
+                <Col lg={12} s={12}>
+                    <h2>영화 리뷰</h2>
+
+                    {reviewData?.results?.map((review) => (
+                        <ReviewItem key={review.id} review={review} />
+                    ))}
+                </Col>
+            </Row>
+
+            <Row className='recommendmovie'>
+                <h1>추천 영화</h1>
+                {recommendData?.results?.map((movie, index) => (
+                    <Col lg={3} sm={4} key={index} className="mb-3">
+                        <div
+                            className="recommend-movie-card"
+                            onClick={() => navigate(`/movies/${movie.id}`)}
+                        >
+                            <img
+                                src={`https://www.themoviedb.org/t/p/w1280${movie.poster_path}`}
+                                alt=""
+                                className="img-fluid"
+                            />
+                            <div className='recommend-overlay'>
+                                <h1 className='movie-card-title'>{movie.title}</h1>
+                                <div>
+                                    <div>{movie.vote_average}</div>
+                                    <div>{movie.popularity}</div>
+                                    <div>{movie.adult ? 'over18' : 'under18'}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
+                ))}
             </Row>
         </Container >
     )

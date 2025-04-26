@@ -28,10 +28,6 @@ const Banner = () => {
         error: upcomingError
     } = useUpcomingMoviesQuery()
 
-    if (isPopularLoading || isTopRatedLoading || isUpcomingLoading) {
-        return <h1>Loading...</h1>;
-    }
-
     if (isPopularError) return <Alert variant="danger">{popularError.message}</Alert>;
     if (isTopRatedError) return <Alert variant="danger">{topratedError.message}</Alert>;
     if (isUpcomingError) return <Alert variant="danger">{upcomingError.message}</Alert>;
