@@ -136,13 +136,13 @@ const MovieDetailPage = () => {
             <Row className='recommendmovie'>
                 <h1>추천 영화</h1>
                 {recommendData?.results?.map((movie, index) => (
-                    <Col lg={3} sm={4} key={index} className="mb-3">
+                    <Col lg={3} sm={4} xs={6} key={index} className="mb-3">
                         <div
                             className="recommend-movie-card"
                             onClick={() => navigate(`/movies/${movie.id}`)}
                         >
                             <img
-                                src={`https://www.themoviedb.org/t/p/w1280${movie.poster_path}`}
+                                src={`https://www.themoviedb.org/t/p/w1280${movie.backdrop_path}`}
                                 alt=""
                                 className="img-fluid"
                             />
